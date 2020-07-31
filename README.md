@@ -23,4 +23,3 @@ rails s
 * Authentication answer:
 To make requests to the API, the user would have to use an API key (JWT or similar). 
 Once the user is authenticathed successfuly the server would perform the specified request, updating a counter upon its completion.
-
