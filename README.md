@@ -20,6 +20,11 @@ cd repository
 bundle install
 rails s
 ```
-* Authentication answer:
-To make requests to the API, the user would have to use an API key (JWT or similar). 
-Once the user is authenticathed successfuly the server would perform the specified request, updating a counter upon its completion.
+
+* Production deployment
+  - Application deployed in heroku. The application can be consulted at https://airquality-app-reino.herokuapp.com/
+  - Example of usage:
+
+```sh
+curl --location --request GET 'https://airquality-app-reino.herokuapp.com/api/v2/timeseries?variables[]=o3&variables[]=so2&step=hour&time_min=2016-10-02T01:45:00Z&time_max=2016-10-10T01:45:00Z&stations[]=aq_jaen'
+```
