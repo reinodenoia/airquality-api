@@ -1,0 +1,158 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API",
+    "version": "2.0.0"
+  },
+  "schemes": ["https", "http"],
+  "basePath": "/api/v2",
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/measurements": {
+      "get": {
+        "summary": "Measurements List",
+        "tags": [
+          "Measurements"
+        ],
+        "parameters": [
+          {
+            "name": "time_max",
+            "in": "query",
+            "description": "Time range max value",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "time_min",
+            "in": "query",
+            "description": "Time range min value",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "variables",
+            "in": "query",
+            "description": "An array of airquality variables",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["so2", "no2", "co", "o3", "pm10", "pm2_5"]
+            }
+          },
+          {
+            "name": "statistical_measurements",
+            "in": "query",
+            "description": "An array of statistical measurements",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["avg", "max", "min"]
+            }
+          },
+          {
+            "name": "stations",
+            "in": "query",
+            "description": "An array of station ids",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "geom",
+            "in": "query",
+            "description": "A geometric polygon",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/timeseries": {
+      "get": {
+        "summary": "Timeseries List",
+        "tags": [
+          "Timeseries"
+        ],
+        "parameters": [
+          {
+            "name": "time_max",
+            "in": "query",
+            "description": "Time range max value",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "time_min",
+            "in": "query",
+            "description": "Time range min value",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "variables",
+            "in": "query",
+            "description": "An array of airquality variables",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["so2", "no2", "co", "o3", "pm10", "pm2_5"]
+            }
+          },
+          {
+            "name": "statistical_measurements",
+            "in": "query",
+            "description": "An array of statistical measurements",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["avg", "max", "min"]
+            }
+          },
+          {
+            "name": "stations",
+            "in": "query",
+            "description": "An array of station ids",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "geom",
+            "in": "query",
+            "description": "A geometric polygon",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "step",
+            "in": "query",
+            "description": "Step",
+            "required":false,
+            "type": "string",
+            "enum": ["hour", "day", "week"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  }
+}
