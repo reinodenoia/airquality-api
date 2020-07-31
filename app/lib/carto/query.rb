@@ -8,26 +8,7 @@ module Carto
     }.freeze
 
     def initialize(params)
-      @params = params
-    end
-
-    def build
-      <<-SQL
-        SELECT
-          sub.station_id,
-          #{variable_names.map { |variable| "sub.#{variable}" }.join(', ')}#{variable_names.any? ? ',' : ''}
-          #{TABLES[:grid]}.population as population
-        FROM (
-          SELECT #{query_variables}
-          FROM #{TABLES[:measurements]}
-          #{query_filters}
-          GROUP BY #{TABLES[:measurements]}.station_id
-        ) sub
-        LEFT JOIN #{TABLES[:stations]} AS stations_join
-        ON sub.station_id = stations_join.station_id
-        LEFT JOIN #{TABLES[:grid]}
-        ON ST_Intersects(#{TABLES[:grid]}.the_geom, stations_join.the_geom)
-      SQL
+      @params = params.symbolize_keys
     end
 
     private
@@ -66,7 +47,7 @@ module Carto
     end
 
     def range_filter
-      "#{TABLES[:measurements]}.timeinstant BETWEEN '#{@params[:time_min]}' AND '#{@params[:time_max]}'"
+      " #{TABLES[:measurements]}.timeinstant BETWEEN '#{@params[:time_min]}' AND '#{@params[:time_max]}'"
     end
 
     def stations_filter
@@ -86,6 +67,10 @@ module Carto
                            .join(',')
 
       "'GEOMETRYCOLLECTION(POLYGON((#{polygon_points})))'"
+    end
+
+    def step
+      @params[:step] || 'day'
     end
   end
 end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Carto::Query do
+describe Carto::MeasurementsQuery do
 
   before :all do
     TABLES = {

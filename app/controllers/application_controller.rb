@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   include Api::V2::Errors
+  before_action :check_params
 
   private
 
@@ -7,26 +8,18 @@ class ApplicationController < ActionController::API
     render json: { data: data }
   end
 
-  def beautify(data)
-    data.tap do |dat|
-      dat['rows'].map! do |row|
-        measurements = {}
+  def check_params
+    validator = Api::V2::Filterable::ApiParamsValidator.new(filterable_params.to_h)
+    return if validator.valid?
 
-        Carto::Utils.statistical_measurements.each do |measurement|
-          row.except(%w[station_id population])
-             .select { |k, _| k[/#{measurement}/] }
-             .tap do |hash|
-            next unless hash.keys.any?
-            measurements.merge!(measurement.to_s => hash.map { |k, _| { "#{k.to_s.split('_')[1]}" => hash[k.to_s] } })
-          end
-        end
+    error = validator.errors.messages.to_a
+                     .map { |err| "#{err.first.upcase}: #{err.last[0]}" }
+                     .join('; ')
+    raise InvalidParameter, error
+  end
 
-        {
-          station_id: row['station_id'],
-          population: row['population'],
-          measurements: measurements
-        }
-      end
-    end
+  def common_params
+    [:time_min, :time_max, :geom,
+     statistical_measurements: [], variables: [], stations: []]
   end
 end
