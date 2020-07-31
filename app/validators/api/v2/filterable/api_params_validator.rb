@@ -7,9 +7,9 @@ module Api
                     :variables, :stations, :step
 
         VALUES = {
-          statistical_measurements: %w[avg max min],
-          variables: %w[so2 no2 pm10 pm2_5 co o3],
-          step: %w[week day hour]
+          statistical_measurements: Carto::Utils.statistical_measurements,
+          variables: Carto::Utils.variables,
+          step: Carto::Utils.step
         }.freeze
 
         TIME_REGEXP = /[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z/i.freeze

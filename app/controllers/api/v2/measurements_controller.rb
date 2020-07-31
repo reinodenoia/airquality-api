@@ -3,7 +3,10 @@ module Api
     class MeasurementsController < ApplicationController
       before_action :check_params
 
-      def index; end
+      def index
+        data = Carto::Api.new.request(query)
+        render_data(beautify(data))
+      end
 
       private
 
@@ -22,6 +25,10 @@ module Api
                          .map { |err| "#{err.first.upcase}: #{err.last[0]}" }
                          .join('; ')
         raise InvalidParameter, error
+      end
+
+      def query
+        Carto::Query.new(filterable_params.to_h).build.delete!("\n")
       end
     end
   end

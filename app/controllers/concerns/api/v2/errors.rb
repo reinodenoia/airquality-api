@@ -7,6 +7,9 @@ module Api
       extend ActiveSupport::Concern
 
       ERRORS = {
+        bad_request: {
+          http_code: 400
+        },
         auth_error: {
           http_code: 401
         },
