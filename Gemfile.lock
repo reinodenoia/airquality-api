@@ -73,7 +73,8 @@ GEM
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
-    puma (3.12.6)
+    puma (4.3.9)
+      nio4r (~> 2.0)
     racc (1.5.2)
     rack (2.2.3)
     rack-test (0.6.3)
@@ -148,7 +149,7 @@ DEPENDENCIES
   byebug
   httparty
   listen (~> 3.0.5)
-  puma (~> 3.0)
+  puma (~> 4.3)
   rails (~> 5.0.7, >= 5.0.7.2)
   rspec-rails
   spring
